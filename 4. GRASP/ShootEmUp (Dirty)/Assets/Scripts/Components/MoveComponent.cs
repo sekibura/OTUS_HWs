@@ -10,6 +10,11 @@ namespace ShootEmUp
         [SerializeField]
         private float speed = 5.0f;
         
+        public void MoveByRigidbodyVelocityHorizontaly(float value)
+        {
+            MoveByRigidbodyVelocity(new Vector2(value, rigidbody2D.velocity.y));
+        }
+        
         public void MoveByRigidbodyVelocity(Vector2 vector)
         {
             var nextPosition = this.rigidbody2D.position + vector * this.speed;
