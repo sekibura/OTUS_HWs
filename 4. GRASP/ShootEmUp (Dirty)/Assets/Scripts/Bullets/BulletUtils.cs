@@ -1,3 +1,4 @@
+using ShootEmUp.Modules.Components;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -18,7 +19,7 @@ namespace ShootEmUp
 
             if (other.TryGetComponent(out HitPointsComponent hitPoints))
             {
-                hitPoints.TakeDamage(bullet.damage);
+                hitPoints.ApplyDamage(bullet.damage);
             }
         }
     }

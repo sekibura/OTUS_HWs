@@ -1,4 +1,5 @@
 using System;
+using ShootEmUp.Modules.Components;
 using ShootEmUp.Modules.Input;
 using UnityEngine;
 
@@ -18,14 +19,14 @@ namespace ShootEmUp
 
         private void OnEnable()
         {
-            this.character.GetComponent<HitPointsComponent>().hpEmpty += this.OnCharacterDeath;
+            this.character.GetComponent<HitPointsComponent>().OnDeath += this.OnCharacterDeath;
             _inputManager.OnSpacePressed += SpacePressed;
             _inputManager.OnHorizontalMovement += OnHorizontalInput;
         }
 
         private void OnDisable()
         {
-            this.character.GetComponent<HitPointsComponent>().hpEmpty -= this.OnCharacterDeath;
+            this.character.GetComponent<HitPointsComponent>().OnDeath -= this.OnCharacterDeath;
             _inputManager.OnSpacePressed -= SpacePressed;
             _inputManager.OnHorizontalMovement -= OnHorizontalInput;
         }

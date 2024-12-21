@@ -1,3 +1,4 @@
+using ShootEmUp.Modules.Components;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -32,7 +33,7 @@ namespace ShootEmUp
                 return;
             }
             
-            if (!this.target.GetComponent<HitPointsComponent>().IsHitPointsExists())
+            if (!this.target.GetComponent<HitPointsComponent>().IsAlive())
             {
                 return;
             }
