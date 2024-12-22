@@ -9,7 +9,8 @@ namespace ShootEmUp
     {
         [SerializeField]
         private EnemyPool _enemyPool;
-
+        [SerializeField] 
+        private BulletConfig _enemyBulletConfig;
         [SerializeField]
         private BulletSystem _bulletSystem;
         
@@ -45,14 +46,14 @@ namespace ShootEmUp
 
         private void OnFire(GameObject enemy, Vector2 position, Vector2 direction)
         {
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+            _bulletSystem.CreateBullet(new BulletSystem.Args
             {
                 isPlayer = false,
-                physicsLayer = (int) PhysicsLayer.ENEMY,
-                color = Color.red,
-                damage = 1,
+                physicsLayer = (int) _enemyBulletConfig.physicsLayer,
+                color = _enemyBulletConfig.color,
+                damage = _enemyBulletConfig.damage,
                 position = position,
-                velocity = direction * 2.0f
+                velocity = direction * _enemyBulletConfig.speed
             });
         }
     }
