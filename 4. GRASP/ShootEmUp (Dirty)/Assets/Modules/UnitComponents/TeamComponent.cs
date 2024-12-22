@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace ShootEmUp.Modules.Components
 {
@@ -7,5 +7,11 @@ namespace ShootEmUp.Modules.Components
     {
         [field: SerializeField]
         public bool IsPlayer { get; private set; }
+
+        private void Start()
+        {
+            if(gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                IsPlayer = false;
+        }
     }
 }
