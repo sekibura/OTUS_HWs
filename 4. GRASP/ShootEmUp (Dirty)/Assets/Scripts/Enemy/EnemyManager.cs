@@ -46,15 +46,11 @@ namespace ShootEmUp
 
         private void OnFire(GameObject enemy, Vector2 position, Vector2 direction)
         {
-            _bulletSystem.CreateBullet(new BulletSystem.Args
-            {
-                isPlayer = false,
-                physicsLayer = (int) _enemyBulletConfig.physicsLayer,
-                color = _enemyBulletConfig.color,
-                damage = _enemyBulletConfig.damage,
-                position = position,
-                velocity = direction * _enemyBulletConfig.speed
-            });
+            _bulletSystem.CreateBullet(
+                position: position, 
+                velocity:  direction * _enemyBulletConfig.Speed,
+                config: _enemyBulletConfig
+            );
         }
     }
 }

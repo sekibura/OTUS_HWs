@@ -46,15 +46,12 @@ namespace ShootEmUp
         private void OnFlyBullet()
         {
             var weapon = this.character.GetComponent<WeaponComponent>();
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
-            {
-                isPlayer = true,
-                physicsLayer = (int)this._bulletConfig.physicsLayer,
-                color = this._bulletConfig.color,
-                damage = this._bulletConfig.damage,
-                position = weapon.Position,
-                velocity = weapon.Rotation * Vector3.up * this._bulletConfig.speed
-            });
+            _bulletSystem.CreateBullet
+            (
+                position: weapon.Position, 
+                velocity: weapon.Rotation * Vector3.up * _bulletConfig.Speed,
+                config: _bulletConfig
+            );
         }
     }
 }
