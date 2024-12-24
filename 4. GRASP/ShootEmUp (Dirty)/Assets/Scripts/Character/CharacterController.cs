@@ -3,35 +3,43 @@ using ShootEmUp.Modules.Components;
 using ShootEmUp.Modules.Input;
 using UnityEngine;
 
+
 namespace ShootEmUp
 {
     public sealed class CharacterController : MonoBehaviour
     {
+        [Header("Character components")]
         [SerializeField]
         private InputManager _inputManager;
         [SerializeField]
         private MoveComponent _moveComponent;
+        [SerializeField]
+        private WeaponComponent _weaponComponent;
+        [SerializeField]
+        private GameObject _playerGameObject;
         
-        [SerializeField] private GameObject character; 
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private BulletSystem _bulletSystem;
-        [SerializeField] private BulletConfig _bulletConfig;
+        [Header("Weapon system")]
+        [SerializeField] 
+        private BulletSystem _bulletSystem;
+        [SerializeField] 
+        private BulletConfig _bulletConfig;
+
+        private void Awake()
+        {
+            _playerGameObject.layer = (int)PhysicsLayer.CHARACTER;
+        }
 
         private void OnEnable()
         {
-            this.character.GetComponent<HitPointsComponent>().OnDeath += this.OnCharacterDeath;
             _inputManager.OnSpacePressed += SpacePressed;
             _inputManager.OnHorizontalMovement += OnHorizontalInput;
         }
 
         private void OnDisable()
         {
-            this.character.GetComponent<HitPointsComponent>().OnDeath -= this.OnCharacterDeath;
             _inputManager.OnSpacePressed -= SpacePressed;
             _inputManager.OnHorizontalMovement -= OnHorizontalInput;
         }
-
-        private void OnCharacterDeath(GameObject _) => this.gameManager.FinishGame();
 
         public void OnHorizontalInput(float value)
         {
@@ -40,16 +48,10 @@ namespace ShootEmUp
         
         public void SpacePressed()
         {
-            OnFlyBullet();
-        }
-        
-        private void OnFlyBullet()
-        {
-            var weapon = this.character.GetComponent<WeaponComponent>();
             _bulletSystem.CreateBullet
             (
-                position: weapon.Position, 
-                velocity: weapon.Rotation * Vector3.up * _bulletConfig.Speed,
+                position: _weaponComponent.Position, 
+                velocity: _weaponComponent.Rotation * Vector3.up * _bulletConfig.Speed,
                 config: _bulletConfig
             );
         }
