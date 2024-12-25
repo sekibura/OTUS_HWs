@@ -2,46 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using ShootEmUp.Modules.Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
     public sealed class EnemyManager : MonoBehaviour
     {
         [SerializeField]
-        private EnemyPool _enemyPool;
+        private EnemyPositions _enemyPositions;
+        [SerializeField]
+        private EnemyObjectPool _enemyPool;
         [SerializeField] 
         private BulletConfig _enemyBulletConfig;
         [SerializeField]
         private BulletSystem _bulletSystem;
-        
-        private readonly HashSet<GameObject> m_activeEnemies = new();
+        [SerializeField]
+        private GameObject _targetCharacter;
 
         private IEnumerator Start()
         {
             while (true)
             {
                 yield return new WaitForSeconds(1);
-                var enemy = this._enemyPool.SpawnEnemy();
+                Enemy enemy = _enemyPool.Get();
+                
                 if (enemy != null)
                 {
-                    if (this.m_activeEnemies.Add(enemy))
-                    {
-                        enemy.GetComponent<HitPointsComponent>().OnDeath += this.OnDestroyed;
-                        enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
-                    }    
+                    enemy.HitPointsComponent.OnDeath += OnDestroyed;
+                    enemy.AttackAgent.OnFire += this.OnFire;
+                    InitEnemy(enemy);
                 }
             }
         }
 
-        private void OnDestroyed(GameObject enemy)
+        private void InitEnemy(Enemy enemy)
         {
-            if (m_activeEnemies.Remove(enemy))
-            {
-                enemy.GetComponent<HitPointsComponent>().OnDeath -= this.OnDestroyed;
-                enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
+            Transform spawnPosition = _enemyPositions.RandomSpawnPosition();
+            enemy.transform.position = spawnPosition.position;
+            
+            Transform attackPosition = _enemyPositions.RandomAttackPosition();
+            enemy.MoveAgent.SetDestination(attackPosition.position);
+            enemy.AttackAgent.SetTarget(_targetCharacter);
+            enemy.AttackAgent.OpenFire();
+        }
 
-                _enemyPool.UnspawnEnemy(enemy);
-            }
+        private void OnDestroyed(GameObject enemyGO)
+        {
+            Enemy enemy = enemyGO.GetComponent<Enemy>();
+            if(enemy == null) 
+                return;
+            
+            enemy.HitPointsComponent.OnDeath -= OnDestroyed;
+            enemy.AttackAgent.OnFire -= OnFire;
+            _enemyPool.ReturnToPool(enemy);
         }
 
         private void OnFire(GameObject enemy, Vector2 position, Vector2 direction)

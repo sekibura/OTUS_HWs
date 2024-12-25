@@ -1,57 +1,70 @@
+using System;
+using System.Collections;
 using ShootEmUp.Modules.Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public delegate void FireHandler(GameObject enemy, Vector2 position, Vector2 direction);
+        public Action<GameObject, Vector2, Vector2> OnFire;
+        
+        [SerializeField] 
+        private WeaponComponent _weaponComponent;
+        [SerializeField] 
+        private EnemyMoveAgent _moveAgent;
+        [SerializeField] 
+        private float _countdown;
 
-        public event FireHandler OnFire;
-
-        [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private EnemyMoveAgent moveAgent;
-        [SerializeField] private float countdown;
-
-        private GameObject target;
-        private float currentTime;
-
+        private GameObject _target;
+        private HitPointsComponent _targetHitPointsComponent;
+        private float _currentTime;
+        private Coroutine _fireCoroutine;
+        
         public void SetTarget(GameObject target)
         {
-            this.target = target;
-        }
-
-        public void Reset()
-        {
-            this.currentTime = this.countdown;
-        }
-
-        private void FixedUpdate()
-        {
-            if (!this.moveAgent.IsReached)
-            {
-                return;
-            }
+            _target = target;
+            _targetHitPointsComponent = _target.GetComponent<HitPointsComponent>();
             
-            if (!this.target.GetComponent<HitPointsComponent>().IsAlive())
-            {
-                return;
-            }
+        }
+        
+        private void OnDisable()
+        {
+            StopFire();
+        }
 
-            this.currentTime -= Time.fixedDeltaTime;
-            if (this.currentTime <= 0)
+        public void OpenFire()
+        {
+            if(_fireCoroutine == null)
+                _fireCoroutine = StartCoroutine(FireCoroutine());
+        }
+        
+        public void StopFire()
+        {
+            if (_fireCoroutine != null)
             {
-                this.Fire();
-                this.currentTime += this.countdown;
+                StopCoroutine(_fireCoroutine);
+                _fireCoroutine = null;
+            }
+        }
+        
+        private IEnumerator FireCoroutine()
+        {
+            while (true)
+            {
+                if (_moveAgent.IsReached && _targetHitPointsComponent.IsAlive())
+                    Fire();
+                yield return new WaitForSeconds(_countdown);
             }
         }
 
         private void Fire()
         {
-            var startPosition = this.weaponComponent.Position;
-            var vector = (Vector2) this.target.transform.position - startPosition;
+            var startPosition = _weaponComponent.Position;
+            var vector = (Vector2) _target.transform.position - startPosition;
             var direction = vector.normalized;
-            this.OnFire?.Invoke(this.gameObject, startPosition, direction);
+            OnFire?.Invoke(gameObject, startPosition, direction);
         }
     }
 }
