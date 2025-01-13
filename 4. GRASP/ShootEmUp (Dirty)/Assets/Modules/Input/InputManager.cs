@@ -1,6 +1,6 @@
 using System;
-
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp.Modules.Input
 {
@@ -12,8 +12,7 @@ namespace ShootEmUp.Modules.Input
         public float HorizontalDirection { get; private set; }
         public bool IsSpacePressed { get; private set; }
         
-
-        private void Update()
+        public void UpdateInputs()
         {
             ProccessHorizontalInput();
             ProcessSpaceInput();

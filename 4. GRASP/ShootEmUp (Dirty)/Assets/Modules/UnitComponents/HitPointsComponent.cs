@@ -10,6 +10,18 @@ namespace ShootEmUp.Modules.Components
         [SerializeField] 
         private int _hpValue;
         
+        private int _defaultHPValue;
+
+        private void Start()
+        {
+            _defaultHPValue = _hpValue;
+        }
+        
+        public void ResetValue()
+        {
+            _hpValue = _defaultHPValue;
+        }
+
         public bool IsAlive() 
         {
             return _hpValue > 0;
