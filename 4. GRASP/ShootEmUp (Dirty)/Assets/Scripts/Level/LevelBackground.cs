@@ -1,6 +1,8 @@
 using System;
+using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -15,7 +17,15 @@ namespace ShootEmUp
         [SerializeField]
         private Transform _backgroundTransform;
 
-        private void FixedUpdate()
+        [Inject]
+        private GameStateMachine _gameStateMachine;
+
+        private void Start()
+        {
+            _gameStateMachine.AddListener(GameStatesNames.GameplayStateName, onFixedUpdate : UpdatePosition );
+        }
+
+        private void UpdatePosition()
         {
             if (_backgroundTransform.position.y <= _endPositionY)
             {
@@ -32,5 +42,23 @@ namespace ShootEmUp
                 gameObject.transform.position.z
             );
         }
+        
+        // private void FixedUpdate()
+        // {
+        //     if (_backgroundTransform.position.y <= _endPositionY)
+        //     {
+        //         _backgroundTransform.position = new Vector3(
+        //             gameObject.transform.position.x,
+        //             _startPositionY,
+        //             gameObject.transform.position.z
+        //         );
+        //     }
+        //
+        //     _backgroundTransform.position -= new Vector3(
+        //         gameObject.transform.position.x,
+        //         _movingSpeedY * Time.fixedDeltaTime,
+        //         gameObject.transform.position.z
+        //     );
+        // }
     }
 }

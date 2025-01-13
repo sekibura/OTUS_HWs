@@ -1,6 +1,8 @@
 using System;
+using ShootEmUp.Modules.GameStateMachine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -18,10 +20,36 @@ namespace ShootEmUp
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
+        private Vector2 _defaultVelocity;
+        
+        [Inject]
+        private GameStateMachine _gameStateMachine;
+
+        private void Start()
+        {
+            _gameStateMachine.AddListener(GameStatesNames.GameplayStateName, onEnter: OnGamePlayStateEnter, onExit: OnGamePlayStateExit);
+        }
+
+        private void OnDestroy()
+        {
+            _gameStateMachine.RemoveListener(GameStatesNames.GameplayStateName, onEnter: OnGamePlayStateEnter, onExit: OnGamePlayStateExit);
+        }
+
+        private void OnGamePlayStateEnter()
+        {
+            rigidbody2D.velocity = _defaultVelocity;
+        }
+        
+        private void OnGamePlayStateExit()
+        {
+            rigidbody2D.velocity = Vector2.zero;
+        }
+        
         public void InitBullet(Vector2 position, Vector2 velocity, BulletConfig config)
         {
             transform.position= position;
             rigidbody2D.velocity = velocity;
+            _defaultVelocity = velocity;
             gameObject.layer = (int)config.PhysicsLayer;
             spriteRenderer.color = config.Color;
             Damage = config.Damage;

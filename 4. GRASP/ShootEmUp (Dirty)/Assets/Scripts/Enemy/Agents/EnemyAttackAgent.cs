@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using ShootEmUp.Modules.Components;
+using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -26,12 +28,6 @@ namespace ShootEmUp
         {
             _target = target;
             _targetHitPointsComponent = _target.GetComponent<HitPointsComponent>();
-            
-        }
-        
-        private void OnDisable()
-        {
-            StopFire();
         }
 
         public void OpenFire()
@@ -53,9 +49,16 @@ namespace ShootEmUp
         {
             while (true)
             {
+                
                 if (_moveAgent.IsReached && _targetHitPointsComponent.IsAlive())
+                {
+                    Debug.Log("Fire");
                     Fire();
+                }
+                else
+                    Debug.Log(_moveAgent.IsReached && _targetHitPointsComponent.IsAlive());
                 yield return new WaitForSeconds(_countdown);
+                Debug.Log("FireCoroutine");
             }
         }
 

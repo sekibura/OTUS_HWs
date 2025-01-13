@@ -21,7 +21,7 @@ namespace ShootEmUp
             _isReached = false;
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate()
         {
             if (_isReached)
                 return;
