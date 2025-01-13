@@ -7,13 +7,13 @@ namespace ShootEmUp.Modules.Base
     public abstract class ObjectPool<T> : MonoBehaviour where T : Component
     {
         [SerializeField] 
-        private T _prefab;
+        protected T _prefab;
         [SerializeField] 
         private int _initialSize = 10;
         [SerializeField]
-        private Transform _container;
+        protected Transform _containerTransform;
 
-        private Queue<T> _pool = new Queue<T>();
+        protected Queue<T> _pool = new Queue<T>();
 
         protected virtual void Awake()
         {
@@ -35,9 +35,9 @@ namespace ShootEmUp.Modules.Base
         /// Creates a new object, adds it to the pool, and deactivates it.
         /// </summary>
         /// <returns>The created object.</returns>
-        private T CreateObject()
+        protected virtual T CreateObject()
         {
-            T newObj = Instantiate(_prefab, _container);
+            T newObj = Instantiate(_prefab, _containerTransform);
             newObj.gameObject.SetActive(false);
             _pool.Enqueue(newObj);
             return newObj;
