@@ -11,14 +11,19 @@ namespace ShootEmUp
     public sealed class CharacterController : MonoBehaviour
     {
         [Header("Character components")]
-        [SerializeField]
+        
+        [Inject]
         private InputManager _inputManager;
+        
         [SerializeField]
         private MoveComponent _moveComponent;
+        
         [SerializeField]
         private WeaponComponent _weaponComponent;
+        
         [SerializeField]
         private HitPointsComponent _hitPointsComponent;
+        
         [SerializeField]
         private GameObject _playerGameObject;
         

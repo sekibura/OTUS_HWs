@@ -8,9 +8,6 @@ namespace ShootEmUp
     public sealed class GameContextInstaller: MonoInstaller
     {
         [SerializeField]
-        private InputManager _inputManager;
-        
-        [SerializeField]
         private CharacterController _characterController;
         
         [SerializeField]
@@ -31,9 +28,10 @@ namespace ShootEmUp
 
         public override void InstallBindings()
         {
+            Container.Bind<InputManager>().AsSingle().NonLazy();
+            
             Container.Bind<EnemyObjectPool>().FromInstance(_enemyObjectPool).AsSingle();
             Container.Bind<BulletsObjectPool>().FromInstance(_bulletsObjectPool).AsSingle();
-            Container.Bind<InputManager>().FromInstance(_inputManager).AsSingle();
             Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
             Container.Bind<BulletSystem>().FromInstance(_bulletSystem).AsSingle();
             Container.Bind<EnemyManager>().FromInstance(_enemyManager).AsSingle();

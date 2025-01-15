@@ -4,7 +4,7 @@ using Zenject;
 
 namespace ShootEmUp.Modules.Input
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputManager
     {
         public Action<float> OnHorizontalMovement;
         public Action OnSpacePressed;
