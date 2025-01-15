@@ -23,6 +23,7 @@ namespace ShootEmUp
             Debug.Log("Обратный отсчет начат.");
         }
 
+        // логика отсчета помещена сюда по причине того, что не хотел в UI реализовывать логику
         public override void Update()
         {
             if (Time.time > _enterTime + _deltaTime)
