@@ -50,14 +50,19 @@ namespace ShootEmUp
 
         private void OnGamePlayStateEnter()
         {
-            _hitPointsComponent.OnDeath += o => _gameStateMachine.SetState(GameStatesNames.GameOverStateName);
+            _hitPointsComponent.OnDeath += OnPlayerDeath;
             SubscribeOnInput();
         }
         
         private void OnGamePlayStateExit()
         {
-            _hitPointsComponent.OnDeath -= o => _gameStateMachine.SetState(GameStatesNames.GameOverStateName);
+            _hitPointsComponent.OnDeath -= OnPlayerDeath;
             UnsubscribeOnInput();
+        }
+
+        private void OnPlayerDeath(GameObject character)
+        {
+            _gameStateMachine.SetState(GameStatesNames.GameOverStateName);
         }
         
         private void SubscribeOnInput()
