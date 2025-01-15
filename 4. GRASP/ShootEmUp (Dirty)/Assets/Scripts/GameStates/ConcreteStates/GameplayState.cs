@@ -19,12 +19,6 @@ namespace ShootEmUp
         {
             Debug.Log("Gameplay Game State");
             ViewManager.Show<GameplayView>();
-            
-        }
-
-        public override void Exit()
-        {
-            
         }
 
         public override void Update()
