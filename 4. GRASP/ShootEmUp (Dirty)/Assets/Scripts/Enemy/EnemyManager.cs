@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using ShootEmUp.Modules.Components;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+using ShootEmUp.Modules.Base;
 using Zenject;
 
 namespace ShootEmUp
@@ -13,8 +14,8 @@ namespace ShootEmUp
     {
         [SerializeField]
         private EnemyPositions _enemyPositions;
-        [SerializeField]
-        private EnemyObjectPool _enemyPool;
+        [Inject]
+        private IObjectPool<Enemy> _enemyPool;
         [SerializeField] 
         private BulletConfig _enemyBulletConfig;
         [SerializeField]

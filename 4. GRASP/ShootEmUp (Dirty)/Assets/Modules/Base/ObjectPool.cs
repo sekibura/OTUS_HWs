@@ -1,28 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Zenject;
 
 namespace ShootEmUp.Modules.Base
 {
-    public abstract class ObjectPool<T> : MonoBehaviour where T : Component
+    public abstract class ObjectPool<T> : IObjectPool<T> where T : Component
     {
-        [SerializeField] 
-        protected T _prefab;
-        [SerializeField] 
+        private ObjectFactory<T> _objectFactory;
         private int _initialSize = 10;
-        [SerializeField]
-        protected Transform _containerTransform;
-
         protected Queue<T> _pool = new Queue<T>();
-
-        protected virtual void Awake()
+        
+        [Inject]
+        protected ObjectPool(ObjectFactory<T> objectFactory, int initialSize)
         {
+            _objectFactory = objectFactory;
+            _initialSize = initialSize;
             InitializePool();
         }
 
-        /// <summary>
-        /// Initializes the pool with the specified number of objects.
-        /// </summary>
         private void InitializePool()
         {
             for (int i = 0; i < _initialSize; i++)
@@ -30,23 +25,15 @@ namespace ShootEmUp.Modules.Base
                 CreateObject();
             }
         }
-
-        /// <summary>
-        /// Creates a new object, adds it to the pool, and deactivates it.
-        /// </summary>
-        /// <returns>The created object.</returns>
+        
         protected virtual T CreateObject()
         {
-            T newObj = Instantiate(_prefab, _containerTransform);
+            T newObj = _objectFactory.Create();
             newObj.gameObject.SetActive(false);
             _pool.Enqueue(newObj);
             return newObj;
         }
-
-        /// <summary>
-        /// Retrieves an object from the pool. Creates a new object if the pool is empty.
-        /// </summary>
-        /// <returns>A pooled object.</returns>
+        
         public T Get()
         {
             if (_pool.Count == 0)
@@ -58,11 +45,7 @@ namespace ShootEmUp.Modules.Base
             obj.gameObject.SetActive(true);
             return obj;
         }
-
-        /// <summary>
-        /// Returns an object to the pool and deactivates it.
-        /// </summary>
-        /// <param name="obj">The object to return.</param>
+        
         public void ReturnToPool(T obj)
         {
             obj.gameObject.SetActive(false);

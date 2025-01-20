@@ -154,10 +154,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 1879759790}
   _bulletSystem: {fileID: 363245577}
-  _bulletsObjectPool: {fileID: 1831741370}
-  _enemyObjectPool: {fileID: 178513673}
   _enemyManager: {fileID: 562298205}
   _levelBackground: {fileID: 4852396043583267082}
+  _enemyPrefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83,
+    type: 3}
+  _enemyContainerTransform: {fileID: 178513672}
+  _bulletPrefab: {fileID: 2743036428890533592, guid: 5fe72886874b4e445b06cf777ca4920d,
+    type: 3}
+  _bulletContainerTransform: {fileID: 1831741369}
 --- !u!4 &11649524
 Transform:
   m_ObjectHideFlags: 0
@@ -474,7 +478,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 178513672}
-  - component: {fileID: 178513673}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -497,21 +500,6 @@ Transform:
   m_Father: {fileID: 562298204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &178513673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178513671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1366112817f53c541ae6c628d1c678c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 5197804421507719398, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
-  _initialSize: 6
-  _containerTransform: {fileID: 178513672}
 --- !u!1 &196756140
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bd15923a144ffbab0333dc6e74e641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPool: {fileID: 1831741370}
 --- !u!1 &381947088
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,7 +858,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPositions: {fileID: 7166351703523243261}
-  _enemyPool: {fileID: 178513673}
   _enemyBulletConfig: {fileID: 11400000, guid: 59683a53a2ff9bf40a696d230c8be825, type: 2}
   _bulletSystem: {fileID: 363245577}
   _targetCharacter: {fileID: 1385823363}
@@ -2845,7 +2831,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1831741369}
-  - component: {fileID: 1831741370}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -2868,21 +2853,6 @@ Transform:
   m_Father: {fileID: 363245576}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1831741370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831741368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606359a1e0f63cd4890453226ea3b469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
-  _initialSize: 50
-  _containerTransform: {fileID: 1831741369}
 --- !u!1 &1879759788
 GameObject:
   m_ObjectHideFlags: 0

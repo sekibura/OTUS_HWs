@@ -10,8 +10,9 @@ namespace ShootEmUp
 {
     public sealed class BulletSystem : MonoBehaviour
     {
-        [SerializeField]
-        private ObjectPool<Bullet> _bulletPool;
+        [Inject]
+        private IObjectPool<Bullet> _bulletPool;
+        
         private List<Bullet> _activeBullets = new List<Bullet>();
         
         [Inject]

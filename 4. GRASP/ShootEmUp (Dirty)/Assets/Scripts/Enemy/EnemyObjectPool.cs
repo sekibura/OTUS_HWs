@@ -7,13 +7,9 @@ using Zenject;
 
 public sealed class EnemyObjectPool : ObjectPool<Enemy>
 {
-    [Inject] 
-    private DiContainer _container;
-    protected override Enemy CreateObject()
+    [Inject]
+    public EnemyObjectPool(ObjectFactory<Enemy> objectFactory, int initialSize) 
+        : base(objectFactory, initialSize)
     {
-        Enemy newObj = _container.InstantiatePrefabForComponent<Enemy>(_prefab, _containerTransform);
-        newObj.gameObject.SetActive(false);
-        _pool.Enqueue(newObj);
-        return newObj;
     }
 }
