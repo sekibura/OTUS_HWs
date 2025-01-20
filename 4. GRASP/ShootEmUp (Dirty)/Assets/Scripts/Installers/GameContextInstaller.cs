@@ -11,9 +11,6 @@ namespace ShootEmUp
     {
         [SerializeField]
         private CharacterController _characterController;
-        
-        [SerializeField]
-        private BulletSystem _bulletSystem;
 
         [SerializeField]
         private EnemyManager _enemyManager;
@@ -53,7 +50,8 @@ namespace ShootEmUp
                 .ToSelf()
                 .AsSingle()
                 .WithArguments(_bulletPrefab.GetComponent<Bullet>(), _bulletContainerTransform, Container);
-            Container.Bind<BulletSystem>().FromInstance(_bulletSystem).AsSingle();
+            
+            Container.Bind<BulletSystem>().AsSingle();
         }
 
         private void BindEnemySystem()

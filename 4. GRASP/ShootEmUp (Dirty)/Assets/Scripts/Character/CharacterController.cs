@@ -28,7 +28,7 @@ namespace ShootEmUp
         private GameObject _playerGameObject;
         
         [Header("Weapon system")]
-        [SerializeField] 
+        [Inject]
         private BulletSystem _bulletSystem;
         [SerializeField] 
         private BulletConfig _bulletConfig;

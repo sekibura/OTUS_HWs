@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 1879759790}
-  _bulletSystem: {fileID: 363245577}
   _enemyManager: {fileID: 562298205}
   _levelBackground: {fileID: 4852396043583267082}
   _enemyPrefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83,
@@ -540,7 +539,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 363245576}
-  - component: {fileID: 363245577}
   m_Layer: 0
   m_Name: BulletSystem
   m_TagString: Untagged
@@ -564,18 +562,6 @@ Transform:
   m_Father: {fileID: 3951702117947426122}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &363245577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363245575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37bd15923a144ffbab0333dc6e74e641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &381947088
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +845,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPositions: {fileID: 7166351703523243261}
   _enemyBulletConfig: {fileID: 11400000, guid: 59683a53a2ff9bf40a696d230c8be825, type: 2}
-  _bulletSystem: {fileID: 363245577}
   _targetCharacter: {fileID: 1385823363}
   _enemyCount: 6
 --- !u!1 &584805193
@@ -2901,7 +2886,6 @@ MonoBehaviour:
   _weaponComponent: {fileID: 1385823366}
   _hitPointsComponent: {fileID: 1385823367}
   _playerGameObject: {fileID: 1385823363}
-  _bulletSystem: {fileID: 363245577}
   _bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
 --- !u!1 &2043099356
 GameObject:

@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using ShootEmUp.Modules.Base;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour
+    public sealed class BulletSystem : IInitializable, IDisposable
     {
-        [Inject]
         private IObjectPool<Bullet> _bulletPool;
-        
-        private List<Bullet> _activeBullets = new List<Bullet>();
-        
-        [Inject]
         private GameStateMachine _gameStateMachine;
+        private List<Bullet> _activeBullets = new List<Bullet>();
 
-        private void Start()
+        [Inject]
+        public void Construct(IObjectPool<Bullet> bulletPool, GameStateMachine gameStateMachine)
+        {
+            _gameStateMachine = gameStateMachine;
+            _bulletPool  = bulletPool;
+        }
+
+        public void Initialize()
         {
             _gameStateMachine.AddListener(GameStatesNames.InitializationStateName, onEnter: OnInitializationStateEnter);
         }
-
-        private void OnDestroy()
+        public void Dispose()
         {
             _gameStateMachine.RemoveListener(GameStatesNames.InitializationStateName, onEnter: OnInitializationStateEnter);
         }

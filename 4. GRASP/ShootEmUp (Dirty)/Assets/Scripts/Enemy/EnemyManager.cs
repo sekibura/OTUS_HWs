@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using ShootEmUp.Modules.Components;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
 
@@ -18,7 +16,7 @@ namespace ShootEmUp
         private IObjectPool<Enemy> _enemyPool;
         [SerializeField] 
         private BulletConfig _enemyBulletConfig;
-        [SerializeField]
+        [Inject]
         private BulletSystem _bulletSystem;
         [SerializeField]
         private GameObject _targetCharacter;
