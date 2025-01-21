@@ -42,23 +42,5 @@ namespace ShootEmUp
                 gameObject.transform.position.z
             );
         }
-        
-        // private void FixedUpdate()
-        // {
-        //     if (_backgroundTransform.position.y <= _endPositionY)
-        //     {
-        //         _backgroundTransform.position = new Vector3(
-        //             gameObject.transform.position.x,
-        //             _startPositionY,
-        //             gameObject.transform.position.z
-        //         );
-        //     }
-        //
-        //     _backgroundTransform.position -= new Vector3(
-        //         gameObject.transform.position.x,
-        //         _movingSpeedY * Time.fixedDeltaTime,
-        //         gameObject.transform.position.z
-        //     );
-        // }
     }
 }
