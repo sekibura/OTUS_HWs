@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using ShootEmUp.Modules.GameStateMachine;
@@ -8,31 +9,33 @@ using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager: IInitializable, IDisposable
     {
-        [SerializeField]
         private EnemyPositions _enemyPositions;
-        [Inject]
         private IObjectPool<Enemy> _enemyPool;
-        [SerializeField] 
         private BulletConfig _enemyBulletConfig;
-        [Inject]
         private BulletSystem _bulletSystem;
-        [SerializeField]
         private GameObject _targetCharacter;
-        [SerializeField] 
-        private int _enemyCount = 6;
-        
-
+        private int _enemyCount;
         private List<Enemy> _activeEnemy = new List<Enemy>();
-        
+        private GameStateMachine _gameStateMachine;
+        private Coroutine _coroutine;
+        private CoroutineRunner _coroutineRunner;
         
         [Inject]
-        private GameStateMachine _gameStateMachine;
+        public void Construct(EnemyPositions enemyPositions, IObjectPool<Enemy> enemyPool, [Inject(Id = "EnemyBullet")] BulletConfig enemyBulletConfig, BulletSystem bulletSystem, [Inject(Id = "CharacterTarget")] GameObject targetCharacter, GameStateMachine gameStateMachine, CoroutineRunner coroutineRunner, int enemyCount = 6)
+        {
+            _enemyPositions = enemyPositions;
+            _enemyPool = enemyPool;
+            _enemyBulletConfig = enemyBulletConfig;
+            _bulletSystem = bulletSystem;
+            _targetCharacter = targetCharacter;
+            _enemyCount = enemyCount;
+            _gameStateMachine = gameStateMachine;
+            _coroutineRunner = coroutineRunner;
+        }
         
-        private Coroutine _coroutine;
-
-        private void Start()
+        public void Initialize()
         {
             _gameStateMachine.AddListener(GameStatesNames.GameplayStateName, 
                 onEnter: OnGameplayStateEnter,
@@ -41,8 +44,8 @@ namespace ShootEmUp
             _gameStateMachine.AddListener(GameStatesNames.InitializationStateName, 
                 onEnter: OnInitializationStateEnter);
         }
-        
-        private void OnDestroy()
+
+        public void Dispose()
         {
             _gameStateMachine.RemoveListener(GameStatesNames.GameplayStateName, 
                 onEnter:OnGameplayStateEnter, onExit: OnGameplayStateExit );
@@ -50,11 +53,12 @@ namespace ShootEmUp
             _gameStateMachine.RemoveListener(GameStatesNames.InitializationStateName, 
                 onEnter: OnInitializationStateEnter);
         }
-
+        
         private void OnGameplayStateEnter()
         {
             StartCoroutineSpawn();
         }
+        
         private void OnGameplayStateExit()
         {
             StopCoroutineSpawn();
@@ -70,19 +74,18 @@ namespace ShootEmUp
         
         private void StartCoroutineSpawn()
         {
-            _coroutine = StartCoroutine(StartSpawn());
+            _coroutine = _coroutineRunner.StartCoroutine(StartSpawn());
         }
-        
+
         private void StopCoroutineSpawn()
         {
             if (_coroutine != null)
             {
-                StopCoroutine(_coroutine);
+                _coroutineRunner.StopCoroutine(_coroutine);
                 _coroutine = null;
             }
         }
-        
-        
+
         private IEnumerator StartSpawn()
         {
             while (true)
@@ -102,7 +105,7 @@ namespace ShootEmUp
                 }
             }
         }
-        
+
         private void InitEnemy(Enemy enemy)
         {
             Transform spawnPosition = _enemyPositions.RandomSpawnPosition();
@@ -113,7 +116,6 @@ namespace ShootEmUp
             enemy.MoveAgent.SetDestination(attackPosition.position);
             enemy.AttackAgent.SetTarget(_targetCharacter);
             enemy.AttackAgent.OpenFire();
-            Debug.Log("InitEnemy");
         }
 
         private void OnDestroyed(GameObject enemyGO)

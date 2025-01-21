@@ -153,14 +153,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 1879759790}
-  _enemyManager: {fileID: 562298205}
   _levelBackground: {fileID: 4852396043583267082}
   _enemyPrefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83,
     type: 3}
   _enemyContainerTransform: {fileID: 178513672}
+  _targetCharacter: {fileID: 1385823363}
   _bulletPrefab: {fileID: 2743036428890533592, guid: 5fe72886874b4e445b06cf777ca4920d,
     type: 3}
   _bulletContainerTransform: {fileID: 1831741369}
+  _characterBulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105,
+    type: 2}
+  _enemyBulletConfig: {fileID: 11400000, guid: 59683a53a2ff9bf40a696d230c8be825, type: 2}
 --- !u!4 &11649524
 Transform:
   m_ObjectHideFlags: 0
@@ -807,7 +810,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 562298204}
-  - component: {fileID: 562298205}
   m_Layer: 0
   m_Name: EnemySystem
   m_TagString: Untagged
@@ -831,22 +833,6 @@ Transform:
   m_Father: {fileID: 3951702117947426122}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &562298205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 562298203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPositions: {fileID: 7166351703523243261}
-  _enemyBulletConfig: {fileID: 11400000, guid: 59683a53a2ff9bf40a696d230c8be825, type: 2}
-  _targetCharacter: {fileID: 1385823363}
-  _enemyCount: 6
 --- !u!1 &584805193
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,6 +3453,7 @@ GameObject:
   - component: {fileID: 3951702117947426122}
   - component: {fileID: 3951702117947426123}
   - component: {fileID: 3951702117947426124}
+  - component: {fileID: 3951702117947426125}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -3538,6 +3525,18 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &3951702117947426125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b51e3b165e0ebf4480a978bd8101c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   m_ObjectHideFlags: 0

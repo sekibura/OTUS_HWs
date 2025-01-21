@@ -19,16 +19,28 @@ namespace ShootEmUp
         private LevelBackground _levelBackground;
 
         [Header("Enemy fields")]
+        
         [SerializeField]
         private GameObject _enemyPrefab;
+        
         [SerializeField]
         private Transform _enemyContainerTransform;
+
+        [SerializeField] 
+        private GameObject _targetCharacter;
         
         [Header("Bullet fields")]
         [SerializeField]
         private GameObject _bulletPrefab;
+        
         [SerializeField]
         private Transform _bulletContainerTransform;
+        
+        [SerializeField]
+        private BulletConfig _characterBulletConfig;
+        
+        [SerializeField]
+        private BulletConfig _enemyBulletConfig;
 
 
         public override void InstallBindings()
@@ -36,6 +48,8 @@ namespace ShootEmUp
             Container.Bind<InputManager>().AsSingle().NonLazy();
             Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
             Container.Bind<LevelBackground>().FromInstance(_levelBackground).AsSingle(); 
+            Container.Bind<CoroutineRunner>().FromComponentInHierarchy().AsSingle(); 
+            
             BindBulletSystem();
             BindEnemySystem();
         }
@@ -52,6 +66,9 @@ namespace ShootEmUp
                 .WithArguments(_bulletPrefab.GetComponent<Bullet>(), _bulletContainerTransform, Container);
             
             Container.Bind<BulletSystem>().AsSingle();
+            
+            Container.Bind<BulletConfig>().WithId("CharacterBullet").FromInstance(_characterBulletConfig).AsCached();
+            Container.Bind<BulletConfig>().WithId("EnemyBullet").FromInstance(_enemyBulletConfig).AsCached();
         }
 
         private void BindEnemySystem()
@@ -64,7 +81,15 @@ namespace ShootEmUp
                 .ToSelf()
                 .AsSingle()
                 .WithArguments(_enemyPrefab.GetComponent<Enemy>(), _enemyContainerTransform, Container); 
-            Container.Bind<EnemyManager>().FromInstance(_enemyManager).AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle().WithArguments(6);
+
+            Container.Bind<EnemyPositions>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<GameObject>()
+                .WithId("CharacterTarget")
+                .FromInstance(_targetCharacter).AsSingle(); 
+
+            
         }
     }
 }
