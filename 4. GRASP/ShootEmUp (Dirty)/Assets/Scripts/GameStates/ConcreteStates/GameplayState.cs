@@ -12,6 +12,7 @@ namespace ShootEmUp
     {
         [Inject]
         private InputManager _inputManager;
+        
         [Inject]
         private CharacterController _characterController;
         

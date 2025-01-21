@@ -49,16 +49,11 @@ namespace ShootEmUp
         {
             while (true)
             {
-                
                 if (_moveAgent.IsReached && _targetHitPointsComponent.IsAlive())
                 {
-                    Debug.Log("Fire");
                     Fire();
                 }
-                else
-                    Debug.Log(_moveAgent.IsReached && _targetHitPointsComponent.IsAlive());
                 yield return new WaitForSeconds(_countdown);
-                Debug.Log("FireCoroutine");
             }
         }
 
