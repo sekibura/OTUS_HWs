@@ -17,7 +17,7 @@ namespace ShootEmUp
         
         public override void InstallBindings()
         {
-            Container.Bind<GameManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
             Container.Bind<InputManager>().AsSingle().NonLazy();
             Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
             Container.Bind<LevelBackground>().FromInstance(_levelBackground).AsSingle(); 
