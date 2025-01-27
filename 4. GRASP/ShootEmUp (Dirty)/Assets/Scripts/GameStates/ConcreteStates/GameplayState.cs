@@ -13,12 +13,9 @@ namespace ShootEmUp
         [Inject]
         private InputManager _inputManager;
         
-        [Inject]
-        private CharacterController _characterController;
-        
         public override void Enter()
         {
-            Debug.Log("Gameplay Game State");
+            Debug.Log("[GameState] Gameplay Game State");
             ViewManager.Show<GameplayView>();
         }
 

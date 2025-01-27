@@ -15,6 +15,7 @@ namespace ShootEmUp
 
         public override void Enter()
         {
+            Debug.Log("[GameState] CountdownState Game State");
             _countdownView = ViewManager.GetView<CountdownView>();
             _enterTime = Time.time;
             _nextUpdate = Mathf.Floor(Time.time) + 1;

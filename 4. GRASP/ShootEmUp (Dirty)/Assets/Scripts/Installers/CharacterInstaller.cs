@@ -6,9 +6,6 @@ namespace ShootEmUp
 {
     public class CharacterInstaller : MonoInstaller
     {
-        // [SerializeField]
-        // private Rigidbody2D _rigidbody;
-        
         [SerializeField]
         private WeaponComponent _weaponComponent;
         

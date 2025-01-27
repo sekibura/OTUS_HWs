@@ -12,7 +12,7 @@ namespace ShootEmUp
     {
         public override void Enter()
         {
-            Debug.Log("PauseState State Enter");
+            Debug.Log("[GameState] PauseState State Enter");
             ViewManager.Show<PauseMenuView>();
         }
     }

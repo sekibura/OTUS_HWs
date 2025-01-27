@@ -10,7 +10,7 @@ namespace ShootEmUp
     {
         public override void Enter()
         {
-            Debug.Log("Initializing Game State");
+            Debug.Log("[GameState] Initializing Game State");
             StateMachine.SetState(GameStatesNames.MenuStateName);
         }
     }

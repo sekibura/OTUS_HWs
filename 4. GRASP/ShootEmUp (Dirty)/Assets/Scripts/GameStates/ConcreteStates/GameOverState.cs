@@ -10,6 +10,7 @@ namespace ShootEmUp
     {
         public override void Enter()
         {
+            Debug.Log("[GameState] GameOverState Game State");
             ViewManager.Show<GameOverView>();
         }
     }
