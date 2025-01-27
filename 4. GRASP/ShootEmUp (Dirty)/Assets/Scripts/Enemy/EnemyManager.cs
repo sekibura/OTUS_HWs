@@ -23,7 +23,14 @@ namespace ShootEmUp
         private CoroutineRunner _coroutineRunner;
         
         [Inject]
-        public void Construct(EnemyPositions enemyPositions, IObjectPool<Enemy> enemyPool, [Inject(Id = "EnemyBullet")] BulletConfig enemyBulletConfig, BulletSystem bulletSystem, [Inject(Id = "CharacterTarget")] GameObject targetCharacter, GameStateMachine gameStateMachine, CoroutineRunner coroutineRunner, int enemyCount = 6)
+        public void Construct(EnemyPositions enemyPositions,
+            IObjectPool<Enemy> enemyPool,
+            [Inject(Id = "EnemyBullet")] BulletConfig enemyBulletConfig,
+            BulletSystem bulletSystem,
+            [Inject(Id = "PlayerGameObject")] GameObject targetCharacter,
+            GameStateMachine gameStateMachine,
+            CoroutineRunner coroutineRunner,
+            int enemyCount = 6)
         {
             _enemyPositions = enemyPositions;
             _enemyPool = enemyPool;

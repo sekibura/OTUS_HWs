@@ -87,8 +87,8 @@ namespace ShootEmUp
 
             Container.Bind<EnemyPositions>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameObject>()
-                .WithId("CharacterTarget")
-                .FromInstance(_targetCharacter).AsSingle(); 
+                .WithId("PlayerGameObject")
+                .FromInstance(_playerGameObject).AsSingle(); 
 
             
         }
