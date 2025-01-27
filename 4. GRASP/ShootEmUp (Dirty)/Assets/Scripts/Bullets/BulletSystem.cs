@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using ShootEmUp.Modules.Base;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
@@ -33,8 +31,8 @@ namespace ShootEmUp
 
         private void RemoveBullet(Bullet bullet)
         {
-            bullet.OnCollisionEntered -= this.OnBulletCollisionEnter;
-            bullet.OnCollisionExit -= this.OnBulletCollisionExit;
+            bullet.OnCollisionEntered -= OnBulletCollisionEnter;
+            bullet.OnCollisionExit -= OnBulletCollisionExit;
             _bulletPool.ReturnToPool(bullet);
         }
     }

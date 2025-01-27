@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using ShootEmUp.Modules.Components;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
@@ -19,17 +16,19 @@ namespace ShootEmUp
         [SerializeField]
         private GameObject _targetCharacter;
 
+        private float _spawnDelaySec = 1f;
+
         private IEnumerator Start()
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(_spawnDelaySec);
                 Enemy enemy = _enemyPool.Get();
                 
                 if (enemy != null)
                 {
                     enemy.HitPointsComponent.OnDeath += OnDestroyed;
-                    enemy.AttackAgent.OnFire += this.OnFire;
+                    enemy.AttackAgent.OnFire += OnFire;
                     InitEnemy(enemy);
                 }
             }
@@ -48,8 +47,9 @@ namespace ShootEmUp
 
         private void OnDestroyed(GameObject enemyGO)
         {
-            Enemy enemy = enemyGO.GetComponent<Enemy>();
-            if(enemy == null) 
+            Enemy enemy;
+            
+            if(!enemyGO.TryGetComponent<Enemy>(out enemy)) 
                 return;
             
             enemy.HitPointsComponent.OnDeath -= OnDestroyed;

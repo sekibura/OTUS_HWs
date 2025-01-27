@@ -1,29 +1,28 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     public sealed class Bullet : MonoBehaviour
     {
-        public  Action<Bullet, Collision2D> OnCollisionEntered;
-        public  Action<Bullet, Collider2D> OnCollisionExit;
+        public event Action<Bullet, Collision2D> OnCollisionEntered;
+        public event Action<Bullet, Collider2D> OnCollisionExit;
         
         [NonSerialized] 
         public int Damage;
 
         [SerializeField]
-        private new Rigidbody2D rigidbody2D;
+        private new Rigidbody2D _rigidbody2D;
 
         [SerializeField]
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         public void InitBullet(Vector2 position, Vector2 velocity, BulletConfig config)
         {
             transform.position= position;
-            rigidbody2D.velocity = velocity;
+            _rigidbody2D.velocity = velocity;
             gameObject.layer = (int)config.PhysicsLayer;
-            spriteRenderer.color = config.Color;
+            _spriteRenderer.color = config.Color;
             Damage = config.Damage;
         }
 

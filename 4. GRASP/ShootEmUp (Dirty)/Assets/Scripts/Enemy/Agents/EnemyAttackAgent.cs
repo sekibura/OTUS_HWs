@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using ShootEmUp.Modules.Components;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public Action<GameObject, Vector2, Vector2> OnFire;
+        public event Action<GameObject, Vector2, Vector2> OnFire;
         
         [SerializeField] 
         private WeaponComponent _weaponComponent;

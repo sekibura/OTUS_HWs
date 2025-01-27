@@ -1,6 +1,5 @@
 using ShootEmUp.Modules.Components;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
@@ -12,8 +11,8 @@ namespace ShootEmUp
         private MoveComponent _moveComponent;
 
         private Vector2 _destination;
-
         private bool _isReached;
+        private float _destinationDelta = 0.25f;
 
         public void SetDestination(Vector2 endPoint)
         {
@@ -27,7 +26,7 @@ namespace ShootEmUp
                 return;
             
             var vector = _destination - (Vector2) transform.position;
-            if (vector.magnitude <= 0.25f)
+            if (vector.magnitude <= _destinationDelta)
             {
                 _isReached = true;
                 return;

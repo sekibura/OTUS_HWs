@@ -1,8 +1,6 @@
-using System;
 using ShootEmUp.Modules.Components;
 using ShootEmUp.Modules.Input;
 using UnityEngine;
-
 
 namespace ShootEmUp
 {
@@ -41,12 +39,12 @@ namespace ShootEmUp
             _inputManager.OnHorizontalMovement -= OnHorizontalInput;
         }
 
-        public void OnHorizontalInput(float value)
+        private void OnHorizontalInput(float value)
         {
             _moveComponent.MoveByRigidbodyVelocityHorizontaly(value);
         }
         
-        public void SpacePressed()
+        private void SpacePressed()
         {
             _bulletSystem.CreateBullet
             (
