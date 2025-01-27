@@ -66,7 +66,7 @@ namespace ShootEmUp
                 .AsSingle()
                 .WithArguments(_bulletPrefab.GetComponent<Bullet>(), _bulletContainerTransform, Container);
             
-            Container.Bind<BulletSystem>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BulletSystem>().AsSingle();
             
             Container.Bind<BulletConfig>().WithId("CharacterBullet").FromInstance(_characterBulletConfig).AsCached();
             Container.Bind<BulletConfig>().WithId("EnemyBullet").FromInstance(_enemyBulletConfig).AsCached();
