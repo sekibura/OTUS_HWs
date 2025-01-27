@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using ShootEmUp.Modules.GameStateMachine;
-using UnityEngine;
 using Zenject;
 
 namespace ShootEmUp
@@ -16,7 +14,7 @@ namespace ShootEmUp
             Container.Bind<GameplayState>().AsSingle();
             Container.Bind<PauseState>().AsSingle();
             Container.Bind<GameOverState>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle()
                 .OnInstantiated<GameStateMachine>((context, storyStateMachine) =>
                 {
@@ -31,7 +29,6 @@ namespace ShootEmUp
                     };
                     storyStateMachine.Init(states); 
                 }).NonLazy();
-            
         }
     }
 }

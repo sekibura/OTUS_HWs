@@ -10,11 +10,10 @@ namespace ShootEmUp
     {
         [Inject]
         private GameStateMachine _gameStateMachine;
-        
+
         [SerializeField]
         private Button _playButton;
-        
-        
+
         public override void Initialize()
         {
             _playButton.onClick.AddListener(() => _gameStateMachine.SetState(GameStatesNames.InitializationStateName));

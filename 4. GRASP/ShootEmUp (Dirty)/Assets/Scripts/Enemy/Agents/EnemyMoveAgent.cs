@@ -1,6 +1,5 @@
 using ShootEmUp.Modules.Components;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {

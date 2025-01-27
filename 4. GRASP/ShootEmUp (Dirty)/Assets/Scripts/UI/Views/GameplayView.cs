@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sekibura.ViewSystem;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
@@ -12,7 +10,7 @@ namespace ShootEmUp
     {
         [Inject]
         private GameStateMachine _gameStateMachine;
-        
+
         [SerializeField] 
         private Button _pauseBtn;
 

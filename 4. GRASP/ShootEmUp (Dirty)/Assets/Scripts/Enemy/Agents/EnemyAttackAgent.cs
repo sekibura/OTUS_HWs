@@ -1,17 +1,14 @@
 using System;
 using System.Collections;
 using ShootEmUp.Modules.Components;
-using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
         public Action<GameObject, Vector2, Vector2> OnFire;
-        
+
         [SerializeField] 
         private WeaponComponent _weaponComponent;
         [SerializeField] 
@@ -35,7 +32,7 @@ namespace ShootEmUp
             if(_fireCoroutine == null)
                 _fireCoroutine = StartCoroutine(FireCoroutine());
         }
-        
+
         public void StopFire()
         {
             if (_fireCoroutine != null)
@@ -44,7 +41,7 @@ namespace ShootEmUp
                 _fireCoroutine = null;
             }
         }
-        
+
         private IEnumerator FireCoroutine()
         {
             while (true)

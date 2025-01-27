@@ -8,10 +8,10 @@ namespace ShootEmUp
     {
         [SerializeField]
         private WeaponComponent _weaponComponent;
-        
+
         [SerializeField]
         private HitPointsComponent _hitPointsComponent;
-        
+
         [SerializeField]
         private MoveComponent _moveComponent;
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sekibura.ViewSystem;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
@@ -19,7 +17,7 @@ namespace ShootEmUp
             _countdownView = ViewManager.GetView<CountdownView>();
             _enterTime = Time.time;
             _nextUpdate = Mathf.Floor(Time.time) + 1;
-            
+
             ViewManager.Show<CountdownView>();
             Debug.Log("Обратный отсчет начат.");
         }
@@ -33,9 +31,9 @@ namespace ShootEmUp
                 StateMachine.SetState(GameStatesNames.GameplayStateName);
                 return;
             }
-            
+
             float remainingTime = Mathf.Ceil(_enterTime + _deltaTime - Time.time);
-            
+
             if (Time.time >= _nextUpdate)
             {
                 // Debug.Log($"Осталось: {remainingTime} секунд");

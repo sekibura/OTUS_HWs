@@ -1,7 +1,5 @@
-using System;
 using ShootEmUp.Modules.GameStateMachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace ShootEmUp

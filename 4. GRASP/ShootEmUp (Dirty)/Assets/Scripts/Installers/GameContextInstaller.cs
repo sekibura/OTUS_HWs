@@ -9,7 +9,7 @@ namespace ShootEmUp
     {
         [SerializeField]
         private LevelBackground _levelBackground;
-        
+
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();

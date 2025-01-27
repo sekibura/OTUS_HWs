@@ -10,7 +10,7 @@ namespace ShootEmUp
     {
         [Inject]
         private GameStateMachine _gameStateMachine;
-        
+
         [SerializeField]
         private Button _playButton;
 

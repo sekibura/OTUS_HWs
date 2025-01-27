@@ -1,6 +1,5 @@
 using System;
 using ShootEmUp.Modules.GameStateMachine;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace ShootEmUp
     {
         public  Action<Bullet, Collision2D> OnCollisionEntered;
         public  Action<Bullet, Collider2D> OnCollisionExit;
-        
+
         [NonSerialized] 
         public int Damage;
 
@@ -21,7 +20,7 @@ namespace ShootEmUp
         private SpriteRenderer spriteRenderer;
 
         private Vector2 _defaultVelocity;
-        
+
         [Inject]
         private GameStateMachine _gameStateMachine;
 
@@ -39,12 +38,12 @@ namespace ShootEmUp
         {
             rigidbody2D.velocity = _defaultVelocity;
         }
-        
+
         private void OnGamePlayStateExit()
         {
             rigidbody2D.velocity = Vector2.zero;
         }
-        
+
         public void InitBullet(Vector2 position, Vector2 velocity, BulletConfig config)
         {
             transform.position= position;
@@ -59,12 +58,12 @@ namespace ShootEmUp
         {
             return gameObject.layer;
         }
-        
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             OnCollisionEntered?.Invoke(this, collision);
         }
-        
+
         private void OnTriggerExit2D(Collider2D other)
         {
             OnCollisionExit?.Invoke(this, other);

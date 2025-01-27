@@ -1,9 +1,6 @@
-
 using Sekibura.ViewSystem;
-using ShootEmUp.Modules.GameStateMachine;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace ShootEmUp
 {
