@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class GameManager : MonoBehaviour
+    public sealed class GameManager : IInitializable
     {
         private GameStateMachine _gameStateMachine;
         
@@ -15,10 +15,10 @@ namespace ShootEmUp
         {
             _gameStateMachine = gameStateMachine;
         }
-
-        private void Start()
+        
+        public void Initialize()
         {
-             _gameStateMachine.SetState(GameStatesNames.InitializationStateName);
+            _gameStateMachine.SetState(GameStatesNames.InitializationStateName);
         }
     }
 }
