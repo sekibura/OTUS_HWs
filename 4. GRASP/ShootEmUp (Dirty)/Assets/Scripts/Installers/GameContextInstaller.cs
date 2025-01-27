@@ -29,20 +29,7 @@ namespace ShootEmUp
         [SerializeField] 
         private GameObject _targetCharacter;
         
-        [Header("Bullet fields")]
-        [SerializeField]
-        private GameObject _bulletPrefab;
         
-        [SerializeField]
-        private Transform _bulletContainerTransform;
-        
-        [SerializeField]
-        private BulletConfig _characterBulletConfig;
-        
-        [SerializeField]
-        private BulletConfig _enemyBulletConfig;
-
-
         public override void InstallBindings()
         {
             Container.Bind<GameManager>().AsSingle().NonLazy();
@@ -51,25 +38,7 @@ namespace ShootEmUp
             Container.Bind<LevelBackground>().FromInstance(_levelBackground).AsSingle(); 
             Container.Bind<CoroutineRunner>().FromComponentInHierarchy().AsSingle(); 
             
-            BindBulletSystem();
             BindEnemySystem();
-        }
-
-        private void BindBulletSystem()
-        {
-            Container.Bind<IObjectPool<Bullet>>()
-                .To<BulletsObjectPool>()
-                .AsSingle()
-                .WithArguments(10);
-            Container.Bind<ObjectFactory<Bullet>>()
-                .ToSelf()
-                .AsSingle()
-                .WithArguments(_bulletPrefab.GetComponent<Bullet>(), _bulletContainerTransform, Container);
-            
-            Container.BindInterfacesAndSelfTo<BulletSystem>().AsSingle();
-            
-            Container.Bind<BulletConfig>().WithId("CharacterBullet").FromInstance(_characterBulletConfig).AsCached();
-            Container.Bind<BulletConfig>().WithId("EnemyBullet").FromInstance(_enemyBulletConfig).AsCached();
         }
 
         private void BindEnemySystem()

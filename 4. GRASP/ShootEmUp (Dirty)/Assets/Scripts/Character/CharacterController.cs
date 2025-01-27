@@ -8,46 +8,49 @@ using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterController : MonoBehaviour
+    public sealed class CharacterController : IInitializable, IDisposable
     {
-        [Header("Character components")]
-        
-        [Inject]
-        private InputManager _inputManager;
-        
-        [SerializeField]
         private MoveComponent _moveComponent;
-        
-        [SerializeField]
         private WeaponComponent _weaponComponent;
-        
-        [SerializeField]
         private HitPointsComponent _hitPointsComponent;
         
-        [SerializeField]
         private GameObject _playerGameObject;
-        
-        [Header("Weapon system")]
-        [Inject]
+        private InputManager _inputManager;
         private BulletSystem _bulletSystem;
-        [SerializeField] 
         private BulletConfig _bulletConfig;
-        
-        [Inject]
         private GameStateMachine _gameStateMachine;
 
-        private void Awake()
+        [Inject]
+        public CharacterController(MoveComponent moveComponent, 
+            WeaponComponent weaponComponent, 
+            HitPointsComponent hitPointsComponent,
+            
+            GameStateMachine stateMachine,
+            [Inject(Id = "CharacterBullet")] BulletConfig bulletConfig,
+            BulletSystem bulletSystem,
+            InputManager inputManager,
+            [Inject(Id = "PlayerGameObject")] GameObject playerGameObject
+            )
+        {
+            _moveComponent = moveComponent;
+            _weaponComponent = weaponComponent;
+            _hitPointsComponent = hitPointsComponent;
+            
+            _gameStateMachine = stateMachine;
+            _bulletConfig = bulletConfig;
+            _bulletSystem = bulletSystem;
+            _inputManager = inputManager;
+            _playerGameObject = playerGameObject;
+        }
+
+        public void Initialize()
         {
             _playerGameObject.layer = (int)PhysicsLayer.CHARACTER;
-        }
-        
-        private void Start()
-        {
             _gameStateMachine.AddListener(GameStatesNames.InitializationStateName, onEnter: ResetData);
             _gameStateMachine.AddListener(GameStatesNames.GameplayStateName, onEnter: OnGamePlayStateEnter, onExit: OnGamePlayStateExit );
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             _gameStateMachine.RemoveListener(GameStatesNames.InitializationStateName, onEnter: ResetData);
             _gameStateMachine.RemoveListener(GameStatesNames.GameplayStateName, onEnter: OnGamePlayStateEnter, onExit: OnGamePlayStateExit );
@@ -58,7 +61,7 @@ namespace ShootEmUp
             _hitPointsComponent.OnDeath += OnPlayerDeath;
             SubscribeOnInput();
         }
-        
+
         private void OnGamePlayStateExit()
         {
             _hitPointsComponent.OnDeath -= OnPlayerDeath;
@@ -69,24 +72,24 @@ namespace ShootEmUp
         {
             _gameStateMachine.SetState(GameStatesNames.GameOverStateName);
         }
-        
+
         private void SubscribeOnInput()
         {
             _inputManager.OnSpacePressed += SpacePressed;
             _inputManager.OnHorizontalMovement += OnHorizontalInput;
         }
-        
+
         private void UnsubscribeOnInput()
         {
             _inputManager.OnSpacePressed -= SpacePressed;
             _inputManager.OnHorizontalMovement -= OnHorizontalInput;
         }
-        
+
         public void OnHorizontalInput(float value)
         {
             _moveComponent.MoveByRigidbodyVelocityHorizontaly(value);
         }
-        
+
         public void SpacePressed()
         {
             _bulletSystem.CreateBullet
@@ -96,7 +99,7 @@ namespace ShootEmUp
                 config: _bulletConfig
             );
         }
-        
+
         public void ResetData()
         {
             _hitPointsComponent.ResetValue();
