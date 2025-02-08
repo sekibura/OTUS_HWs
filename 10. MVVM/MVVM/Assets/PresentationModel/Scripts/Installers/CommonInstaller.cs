@@ -30,7 +30,6 @@ namespace Lessons.Architecture.PM.Installers
             Container.Bind<UserHelper>().FromInstance(_userHelper).AsSingle();
             Container.Bind<UI.PopUpManager>().AsSingle().WithArguments(_popUps);
             Container.Bind<CharacterInfo>().AsSingle();
-            Container.Bind<UserInfo>().AsSingle();
 
             Container.Bind<PopupUserInfo>().FromComponentInHierarchy().AsSingle();
             
