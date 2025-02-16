@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace ShootEmUp.Modules.Base
+namespace Sekibura.Modules.Base
 {
     public class ObjectFactory<T> : IFactory<T> where T : Component
     {

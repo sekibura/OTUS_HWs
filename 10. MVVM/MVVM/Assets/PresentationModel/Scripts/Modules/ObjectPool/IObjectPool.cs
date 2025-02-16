@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShootEmUp.Modules.Base
+namespace Sekibura.Modules.Base
 {
     public interface IObjectPool<T> where T : Component 
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddc6998db7b92a43bc5467d117cd2e9, type: 3}
   m_Name: UserInfo3
   m_EditorClassIdentifier: 
-  _avatarImage: {fileID: 21300000, guid: a564258f7260e47d58e9ee37e2a3abb7, type: 3}
+  _avatar: {fileID: 21300000, guid: a564258f7260e47d58e9ee37e2a3abb7, type: 3}
   _nickname: Pro100Gamer
   _description: Only Mirage player
   _currentXp: 50

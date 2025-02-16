@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace ShootEmUp.Modules.Base
+namespace Sekibura.Modules.Base
 {
     public abstract class ObjectPool<T> : IObjectPool<T> where T : Component
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddc6998db7b92a43bc5467d117cd2e9, type: 3}
   m_Name: UserInfo2
   m_EditorClassIdentifier: 
-  _avatarImage: {fileID: 21300000, guid: 7c0892898786946a98a1057c9873611a, type: 3}
+  _avatar: {fileID: 21300000, guid: 7c0892898786946a98a1057c9873611a, type: 3}
   _nickname: GamerSuper228
   _description: Doka2 ze best
   _currentXp: 12

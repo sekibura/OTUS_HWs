@@ -1,7 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
 
-namespace Lessons.Architecture.PM
+namespace OTUSHW.MVVM.UI.Data
 {
     public sealed class CharacterStat
     {

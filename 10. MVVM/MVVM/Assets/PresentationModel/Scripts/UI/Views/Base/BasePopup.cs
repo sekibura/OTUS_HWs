@@ -1,14 +1,14 @@
 using UnityEngine;
 
-namespace Lessons.Architecture.PM.UI
+namespace OTUSHW.MVVM.UI.View
 {
     public class BasePopup : MonoBehaviour
     {
-        public virtual void Show(object parameter = null)
+        public virtual void Show()
         {
             gameObject.SetActive(true);
         }
-        
+
         public virtual void Hide()
         {
             gameObject.SetActive(false);

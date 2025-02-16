@@ -1,51 +1,52 @@
 using System.Collections.Generic;
-using Lessons.Architecture.PM.Helpers;
-using Lessons.Architecture.PM.UI;
-using ShootEmUp.Modules.Base;
+using OTUSHW.MVVM.UI.Helpers;
+using OTUSHW.MVVM.UI.View;
+using Sekibura.Modules.Base;
 using UnityEngine;
 using Zenject;
 
-namespace Lessons.Architecture.PM.Installers
+namespace OTUSHW.MVVM.UI.Installers
 {
-    public class CommonInstaller : MonoInstaller
+    public sealed class CommonInstaller : MonoInstaller
     {
         [SerializeField]
         private List<BasePopup> _popUps;
-        
+
         [SerializeField]
         private PlayerLevelHelper _playerLevelHelper;
-        
+
         [SerializeField]
         private UserHelper _userHelper;
 
         [SerializeField] 
         private Transform _characterStatsRoot;
+
         [SerializeField]
-        private CharacterStatItemPresenter _characterStatItemPresenter;
-        
+        private CharacterStatView _characterStatView;
+
         public override void InstallBindings()
         {
             Container.Bind<PlayerLevelManager>().AsSingle().NonLazy();
             Container.Bind<PlayerLevelHelper>().FromInstance(_playerLevelHelper).AsSingle();
             Container.Bind<UserHelper>().FromInstance(_userHelper).AsSingle();
-            Container.Bind<UI.PopUpManager>().AsSingle().WithArguments(_popUps);
+            Container.Bind<PopUpManager>().AsSingle().WithArguments(_popUps);
             Container.Bind<CharacterInfo>().AsSingle();
-
             Container.Bind<PopupUserInfo>().FromComponentInHierarchy().AsSingle();
-            
+
             BindCharacterStatsItemStuff();
         }
 
         private void BindCharacterStatsItemStuff()
         {
-            Container.Bind<IObjectPool<CharacterStatItemPresenter>>()
-                .To<CharacterStatItemsPool>()
+            Container.Bind<IObjectPool<CharacterStatView>>()
+                .To<CharacterStatViewPool>()
                 .AsSingle()
                 .WithArguments(20);
-            Container.Bind<ObjectFactory<CharacterStatItemPresenter>>()
+
+            Container.Bind<ObjectFactory<CharacterStatView>>()
                 .ToSelf()
                 .AsSingle()
-                .WithArguments(_characterStatItemPresenter.GetComponent<CharacterStatItemPresenter>(), _characterStatsRoot, Container);
+                .WithArguments(_characterStatView.GetComponent<CharacterStatView>(), _characterStatsRoot, Container);
         }
     }
 }

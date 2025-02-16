@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lessons.Architecture.PM.UI
+namespace OTUSHW.MVVM.UI.View
 {
     public sealed class PopUpManager
     {
         private Dictionary<Type, BasePopup> _popUps = new();
         private BasePopup _currentPopup;
-        
+
         public PopUpManager(List<BasePopup> popUps)
         {
             for (var index = 0; index < popUps.Count; index++)
@@ -28,18 +28,20 @@ namespace Lessons.Architecture.PM.UI
             }
         }
 
-        public void ShowPopUp<T>(object parameter = null) where T: BasePopup
+        public T ShowPopUp<T>() where T: BasePopup
         {
             if (_popUps.TryGetValue(typeof(T), out var popup))
             {
                 if(_currentPopup != null)
                     _currentPopup.Hide();
-                
-                popup.Show(parameter);
+
+                popup.Show();
                 _currentPopup = popup;
+                return (T)_currentPopup;
             }
+            return null;
         }
-        
+
         public void Hide<T>() where T: BasePopup
         {
             if (_popUps.TryGetValue(typeof(T), out var popup))

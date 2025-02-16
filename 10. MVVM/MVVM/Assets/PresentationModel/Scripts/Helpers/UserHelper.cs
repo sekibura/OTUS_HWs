@@ -1,20 +1,21 @@
+using OTUSHW.MVVM.UI.View;
+using OTUSHW.MVVM.UI.ViewModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Lessons.Architecture.PM.Helpers
+namespace OTUSHW.MVVM.UI.Helpers
 {
-    public class UserHelper : MonoBehaviour
+    public sealed class UserHelper : MonoBehaviour
     {
         [SerializeField] 
-        private Data.UserInfo _userInfo;
+        private Data.UserInfoSO _userInfoSo;
         
-        private UI.PopUpManager _popupManager;
+        private PopUpManager _popupManager;
         private PlayerLevelManager _playerLevelManager;
-
         
         [Inject]
-        private void Construct(UI.PopUpManager popupManager, PlayerLevelManager playerLevelManager)
+        private void Construct(PopUpManager popupManager, PlayerLevelManager playerLevelManager)
         {
             _popupManager = popupManager;
             _playerLevelManager = playerLevelManager;
@@ -23,8 +24,12 @@ namespace Lessons.Architecture.PM.Helpers
         [Button]
         private void ShowPopupUserInfo()
         {
-            var userinfoModel = new UserInfoModel(_userInfo, _playerLevelManager);
-            _popupManager.ShowPopUp<PopupUserInfo>(userinfoModel);
+            UserInfoModel userinfoModel = new UserInfoModel(_userInfoSo, _playerLevelManager);
+            UserXPModel userXPModel = new UserXPModel(_userInfoSo, _playerLevelManager);
+            CharacterStatsModel characterStatsModel = new CharacterStatsModel(userinfoModel.UserInfoSo.CharacterInfo);
+            
+            PopupUserInfo popUp = _popupManager.ShowPopUp<PopupUserInfo>();
+            popUp.SetData(userinfoModel, userXPModel, characterStatsModel);
         }
     }
 }

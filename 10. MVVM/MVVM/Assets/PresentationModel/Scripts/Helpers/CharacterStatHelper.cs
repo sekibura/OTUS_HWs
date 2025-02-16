@@ -1,35 +1,36 @@
 using System.Linq;
 using System.Text;
+using OTUSHW.MVVM.UI.Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Lessons.Architecture.PM.Helpers
+namespace OTUSHW.MVVM.UI.Helpers
 {
     public sealed class CharacterStatHelper : MonoBehaviour
     {
         [SerializeField]
-        private Data.UserInfo _userInfo;
+        private UserInfoSO _userInfoSo;
 
         [Button]
         public void AddStat(string name, int value)
         {
-            _userInfo.CharacterInfo.AddStat(new CharacterStat(name, value));
+            _userInfoSo.CharacterInfo.AddStat(new CharacterStat(name, value));
         }
 
         [Button]
         public void RemoveStat(string name)
         {
-            _userInfo.CharacterInfo.RemoveStat(name);
+            _userInfoSo.CharacterInfo.RemoveStat(name);
         }
 
         [Button]
         private void PrintAllStats()
         {
-            var stats = _userInfo.CharacterInfo.GetAllStats();
+            var stats = _userInfoSo.CharacterInfo.GetAllStats();
             StringBuilder sb = new StringBuilder();
-            foreach (var VARIABLE in stats)
+            foreach (var stat in stats)
             {
-                sb.Append($"{VARIABLE.ToString()} ");
+                sb.Append($"{stat.ToString()} ");
             }
             Debug.Log(sb.ToString());
         }
@@ -48,10 +49,10 @@ namespace Lessons.Architecture.PM.Helpers
         [Button]
         public void RemoveAllStats()
         {
-            var stats = _userInfo.CharacterInfo.GetAllStats().ToList();
-            foreach (var VARIABLE in stats)
+            var stats = _userInfoSo.CharacterInfo.GetAllStats().ToList();
+            foreach (var stat in stats)
             {
-                RemoveStat(VARIABLE.Name);
+                RemoveStat(stat.Name);
             }
         }
     }

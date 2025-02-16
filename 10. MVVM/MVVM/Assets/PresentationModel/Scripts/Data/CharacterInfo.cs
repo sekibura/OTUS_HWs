@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-namespace Lessons.Architecture.PM
+namespace OTUSHW.MVVM.UI.Data
 {
     [Serializable]
     public sealed class CharacterInfo
     {
         public event Action<CharacterStat> OnStatAdded;
         public event Action<CharacterStat> OnStatRemoved;
-    
-        [ShowInInspector, ReadOnly]
-        private readonly HashSet<CharacterStat> stats = new();
-        
+        public event Action<CharacterStat> OnStatValueChanged;
+
+        [ShowInInspector, ReadOnly] private readonly HashSet<CharacterStat> stats = new();
+
         public void AddStat(CharacterStat stat)
         {
-            if (this.stats.Add(stat))
+            if (stats.Add(stat))
             {
-                this.OnStatAdded?.Invoke(stat);
+                OnStatAdded?.Invoke(stat);
             }
         }
-        
+
         public void RemoveStat(CharacterStat stat)
         {
-            if (this.stats.Remove(stat))
+            if (stats.Remove(stat))
             {
-                this.OnStatRemoved?.Invoke(stat);
+                OnStatRemoved?.Invoke(stat);
             }
         }
-        
+
         public void RemoveStat(string name)
         {
             CharacterStat stat = GetStat(name);
@@ -37,15 +37,15 @@ namespace Lessons.Architecture.PM
             if(stat == null)
                return;
             
-            if (this.stats.Remove(stat))
+            if (stats.Remove(stat))
             {
-                this.OnStatRemoved?.Invoke(stat);
+                OnStatRemoved?.Invoke(stat);
             }
         }
 
         public CharacterStat GetStat(string name)
         {
-            foreach (var stat in this.stats)
+            foreach (var stat in stats)
             {
                 if (stat.Name == name)
                 {
@@ -56,6 +56,13 @@ namespace Lessons.Architecture.PM
             throw new Exception($"Stat {name} is not found!");
         }
 
+        public void SetStatValue(string name, int value)
+        {
+            CharacterStat stat = GetStat(name);
+            stat.ChangeValue(value);
+            OnStatValueChanged?.Invoke(stat);
+        }
+
         public HashSet<CharacterStat> GetAllStats()
         {
             return stats;
@@ -63,7 +70,7 @@ namespace Lessons.Architecture.PM
 
         public CharacterStat[] GetStats()
         {
-            return this.stats.ToArray();
+            return stats.ToArray();
         }
     }
 }

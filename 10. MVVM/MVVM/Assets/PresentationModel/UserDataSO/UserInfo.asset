@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddc6998db7b92a43bc5467d117cd2e9, type: 3}
   m_Name: UserInfo
   m_EditorClassIdentifier: 
-  _avatarImage: {fileID: 21300000, guid: 954d79ad0f5124da59b33552ab47a641, type: 3}
-  _nickname: 1337Pro98Gamer
-  _description: Best gamer in the Saratov
+  _avatar: {fileID: 21300000, guid: 954d79ad0f5124da59b33552ab47a641, type: 3}
+  _nickname: naklvjfg
+  _description: fjldjfhkjdfhksjdf
+  _currentXp: 0
+  _currentLvl: 0
